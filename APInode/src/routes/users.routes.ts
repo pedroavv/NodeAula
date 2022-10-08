@@ -1,36 +1,25 @@
 import { Router } from "express";
-import { prismaClient } from "../database/prismaClient";
+import { listUserController } from "../Controller/ListUsersController";
+import { createUsersController } from "../Controller/users/createUsersController";
+import { deleteUsersController } from "../Controller/users/deleteUsersController";
+import { editUsersController } from "../Controller/users/editUsersController";
+import { findByIdUsersController } from "../Controller/users/findByIdUsersController";
 
 const userRoutes = Router();
 
-userRoutes.get("/", async (req, res) => {
-  const usersList = await prismaClient.user.findMany();
-
-  return res.json(usersList);
-  
-});
+// Listando usuarios
+userRoutes.get("/", listUserController);
 
 // Criando um usuario
-userRoutes.post("/create", async (req, res) => {
-  const user = req.body;
+userRoutes.post("/create", createUsersController);
 
-  const createdUser = await prismaClient.user.create({
-    data: {
-      name: user.name,
-      email: user.email,
-      password: user.password,
-    },
-  });
+// Atualizando usuario
+userRoutes.put("/update", editUsersController);
 
-  res.json(createdUser);
-});
+//Deletando usuario
+userRoutes.delete("/delete", deleteUsersController);
 
-userRoutes.put("/update", (req, res) => {
-  res.send("Atualizando usuario");
-});
-
-userRoutes.get("/findbyId/:id", (req, res) => {
-  res.send("Buscando usuario");
-});
+//Buscando usuario
+userRoutes.get("/findbyId/:id", findByIdUsersController);
 
 export default userRoutes;
