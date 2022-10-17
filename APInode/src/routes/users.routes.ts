@@ -1,11 +1,23 @@
 import { Router } from "express";
-import { listUserController } from "../Controller/ListUsersController";
+import { listUserController } from "../Controller/listUsersController";
 import { createUsersController } from "../Controller/users/createUsersController";
 import { deleteUsersController } from "../Controller/users/deleteUsersController";
 import { editUsersController } from "../Controller/users/editUsersController";
 import { findByIdUsersController } from "../Controller/users/findByIdUsersController";
 
 const userRoutes = Router();
+
+/**
+ * @openapi
+ * /users:
+ *  get:
+ *   tags: [Usuários]
+ *   summary: Busca todos os usuários
+ *   description: Busca todos os usuários cadastrados no banco de dados
+ *   responses:
+ *    200:
+ *     description: Listagem dos usuários
+ */
 
 // Listando usuarios
 userRoutes.get("/", listUserController);
