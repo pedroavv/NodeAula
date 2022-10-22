@@ -5,8 +5,11 @@ import { transactionsRouter } from "./transaction.routes";
 import { JwtMiddleware } from "../middlewares/jwt";
 import { logoutTransactionsController } from "../Controller/transactions/logoutController";
 import { cnpjController } from "../services/cnpjController";
+import cors from "cors";
 
 const routes = Router();
+
+routes.use(cors({ origin: "*" }));
 
 routes.get("/", (req, res) => {
   res.send("Hello World");
