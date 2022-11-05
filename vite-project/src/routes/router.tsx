@@ -2,9 +2,11 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Layout } from "../components/layout/layout";
 import Dashboard from "../containers/dashboard/dashboard";
 import Login from "../containers/login/login";
+import { useAuth } from "../store/app/auth/auth";
 
 const Router = () => {
-  const isAuthenticated = false;
+  // Se está autenticado ou não no sistema
+  const { isAuthenticated } = useAuth();
 
   return (
     <BrowserRouter>
@@ -13,12 +15,14 @@ const Router = () => {
           {isAuthenticated ? (
             <>
               <Route path="/dashboard" element={<Dashboard />} />
+
               <Route path="/" element={<Navigate to="/dashboard" />} />
               <Route path="*" element={<Navigate to="/dashboard" />} />
             </>
           ) : (
             <>
               <Route path="/login" element={<Login />} />
+
               <Route path="/" element={<Navigate to="/login" />} />
               <Route path="*" element={<Navigate to="/login" />} />
             </>
@@ -28,4 +32,5 @@ const Router = () => {
     </BrowserRouter>
   );
 };
+
 export default Router;
