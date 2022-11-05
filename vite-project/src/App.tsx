@@ -1,11 +1,14 @@
 import {
-  createTheme,
-  StyledEngineProvider,
   ThemeProvider,
+  StyledEngineProvider,
+  createTheme,
 } from "@mui/material";
 import { SnackbarProvider } from "notistack";
 import Router from "./routes/router";
 import { GlobalStyles } from "./styles/GlobalStyles";
+
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 function App() {
   const theme = createTheme({
@@ -35,6 +38,11 @@ function App() {
         },
       },
       MuiButton: {
+        styleOverrides: {
+          root: {
+            textTransform: "none",
+          },
+        },
         defaultProps: {
           variant: "contained",
           size: "medium",
@@ -42,6 +50,7 @@ function App() {
       },
     },
   });
+
   return (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
@@ -53,11 +62,14 @@ function App() {
           }}
           autoHideDuration={2000}
         >
-          <GlobalStyles />
-          <Router />
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <GlobalStyles />
+            <Router />
+          </LocalizationProvider>
         </SnackbarProvider>
       </ThemeProvider>
     </StyledEngineProvider>
   );
 }
+
 export default App;

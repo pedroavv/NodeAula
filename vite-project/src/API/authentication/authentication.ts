@@ -1,6 +1,15 @@
 import { LoginFormValues } from "../../containers/login/login.types";
-import { api } from "../API";
+import { api, makeHeaders } from "../API";
 
 const login = async (data: LoginFormValues) => await api.post("/login", data);
 
-export { login };
+const logout = async () =>
+  await api.post(
+    "/logout",
+    {},
+    {
+      headers: makeHeaders(),
+    }
+  );
+
+export { login, logout };

@@ -14,9 +14,12 @@ const createTransactionsController = async (req: Request, res: Response) => {
 
   required(title, "title");
   required(value, "value");
-  required(type, "type");
   required(date, "date");
   required(decoded.id, "id");
+
+  if (type != 0 && type != 1) {
+    throw new Error("Type deve ser 0 ou 1");
+  }
 
   const transaction = await prismaClient.transaction.create({
     data: {

@@ -5,9 +5,12 @@ import * as yup from "yup";
 import { useApp } from "../../../store/app/app";
 import { LoginFormValues } from "../login.types";
 import { login } from "../../../API/authentication/authentication";
+import { useAuth } from "../../../store/app/auth/auth";
 
 const useLogin = () => {
   const { setIsLoading, handleError } = useApp();
+
+  const { setToken } = useAuth();
 
   const schema = yup.object({
     email: yup.string().email("Email inválido").required("Email obrigatório"),
@@ -24,7 +27,7 @@ const useLogin = () => {
     try {
       const response = await login(data);
 
-      console.log(response.data.token);
+      setToken(response.data.token);
     } catch (err) {
       handleError(err);
     }
